@@ -9,12 +9,12 @@ Clone the repository and go to it's root folder
 ```bash
   make
 ```
-##Usage
+## Usage
 
 ```bash
   ./pipex <Infile> <cmd 1> <cmd 2> ... <cmd n> <Outfile>
 ```
-##Bonus part  
+## Bonus part  
 
  The bonus part covers heredoc functionnality, first you should
  ```bash
