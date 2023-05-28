@@ -109,6 +109,7 @@ char	*ft_join(char *s1, char *s2)
 	return (pstr);
 }
 
+/*This function will check if the user input for the infile is "here_doc"*/
 int	heredoc_check(t_data *data, char *argv[])
 {
 	if (ft_strncmp("here_doc", argv[1], 9) == 0)
