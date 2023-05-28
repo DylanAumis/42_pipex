@@ -32,7 +32,7 @@ BONUS_OBJ		= $(BONUS:.c=.o)
 
 CC				= cc
 RM				= rm -f
-CFLAGS			= -Wall -Wextra
+CFLAGS			= -Wall -Wextra -Werror
 
 NAME            = pipex
 NAME_BONUS      = pipex_bonus
