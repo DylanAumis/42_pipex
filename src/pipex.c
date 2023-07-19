@@ -45,7 +45,7 @@ void	ft_init_outfile(t_data *data)
 	close(data->io_fds[1]);
 }
 
-/*Function called to pipe and fork processess, which will continue the program*/
+/*Function called to pipe and fork processes, which will continue the program*/
 void	ft_execute(t_data *data, char *env[], int *i)
 {
 	pid_t	id;
