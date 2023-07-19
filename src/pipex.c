@@ -66,7 +66,7 @@ void	ft_execute(t_data *data, char *env[], int *i)
 	wait(NULL);
 }
 
-/*Child process called by fork , inherits data from ft_execute params*/
+/*Child process called by fork , inherits data from ft_execute parameters*/
 void	child_process(t_data *data, char *env[], int *i)
 {
 	if (cmd_check(data, i))
