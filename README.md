@@ -26,5 +26,5 @@ Then you can use it like this
 ```
 Or
 ```bash
-  ./pipex_bonus here_doc DELIMITER <cmd 1> <cmd 2> ... <cmd n> <Outfile>
+  ./pipex_bonus here_doc <DELIMITER> <cmd 1> <cmd 2> ... <cmd n> <Outfile>
 ```
