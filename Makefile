@@ -11,63 +11,81 @@
 # **************************************************************************** #
 
 SRC_MAIN		=	src/main.c \
-				src/parsing.c \
-				src/pipex.c \
-				src/free.c
+					src/parsing.c \
+					src/pipex.c \
+					src/free.c
 
 BONUS			=	bonus/main_bonus.c \
-				bonus/parsing_bonus.c \
-				bonus/pipex_bonus.c \
-				bonus/heredoc_bonus.c \
-				bonus/free_bonus.c
+					bonus/parsing_bonus.c \
+					bonus/pipex_bonus.c \
+					bonus/heredoc_bonus.c \
+					bonus/free_bonus.c
 
-SRCS			=	${SRC_MAIN}
+SRCS			= ${SRC_MAIN}
 
-SRCS_BONUS		=	${BONUS}
+SRCS_BONUS		= ${BONUS}
 
-LIBFT_DIR		=	Libft/
+LIBFT_DIR		= Libft/
 
-OBJ			=	$(SRCS:.c=.o)
-BONUS_OBJ		=	$(BONUS:.c=.o)
+OBJ_DIR			= objs
+BONUS_OBJ_DIR		= bonus_objs
+OBJS			= $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+BONUS_OBJS		= $(patsubst bonus/%.c,$(BONUS_OBJ_DIR)/%.o,$(SRCS_BONUS))
 
-CC			=	cc
-RM			=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror
+CC			= cc
+RM			= rm -f
+CFLAGS			= -Wall -Wextra -Werror
 
-NAME			=	pipex
-NAME_BONUS		=	pipex_bonus
+NAME            = pipex
+NAME_BONUS      = pipex_bonus
 
-all:			$(NAME)
+all: $(OBJ_DIR) $(OBJS) $(NAME)
 
-$(NAME): 		$(OBJ)
-				@echo "\033[1;35m\n                              ⌛️Compiling files...\033[0m"
-				@make -s -C ${LIBFT_DIR}
-				$(CC) $(OBJ) $(CFLAGS) -L$(LIBFT_DIR) -lft -o $(NAME)
-				@echo "\033[32;1m\n                     Project has compiled successfully! ✅ \033[0m"
-				@echo "\033[32;1m\n 💾 Executable './$(NAME)' has been created in: \n    └─ 📂 \033[4;36m ~ $(PWD)\033[0m"
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	
+$(BONUS_OBJ_DIR):
+	@mkdir -p $(BONUS_OBJ_DIR)
 
-$(NAME_BONUS): 	$(BONUS_OBJ)
-				@echo "\033[1;35m\n                          ⌛️Compiling BONUS files...\n\033[0m"
-				@make -s -C ${LIBFT_DIR}
-				$(CC) $(BONUS_OBJ) $(CFLAGS) -L$(LIBFT_DIR) -lft -o $(NAME_BONUS)
-				@echo "\033[32;1m\n                     Project has compiled successfully! ✅ \033[0m"
-				@echo "\033[32;1m\n 💾 Executable './$(NAME_BONUS)' has been created in: \n    └─ 📂 \033[4;36m ~ $(PWD)\033[0m"
+$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
+	@mkdir -p $(@D)
+	@printf '\033[A\033[19C'"⌛ [\e[1;96mCompiling\033[0m]\033[35m $<\033[0m \n"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(BONUS_OBJ_DIR)/%.o: bonus/%.c | $(BONUS_OBJ_DIR)
+	@mkdir -p $(@D)
+	@printf '\033[A\033[19C'"⌛ [\e[1;96mCompiling BONUS\033[0m]\033[35m $<\033[0m \n"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): 		$(OBJS)
+			@make -s -C ${LIBFT_DIR}
+			@$(CC) $(OBJS) $(CFLAGS) -L$(LIBFT_DIR) -lft -o $(NAME)
+			@printf '\033[A\033[20C'"\033[32;1m  ✅ Project has compiled successfully!          \033[0m"
+			@printf "\n\n    [🏳️ FLAGS: \033[0;35m$(CFLAGS)\033[0m]"
+			@echo "\033[32;1m\n 💾 Executable \e[7m./$(NAME)\e[27m has been created in: \n    └─ 📂 \033[4;36m ~ $(PWD)\033[0m"
+
+$(NAME_BONUS): 		$(BONUS_OBJS)
+			@make -s -C ${LIBFT_DIR}
+			@$(CC) $(BONUS_OBJS) $(CFLAGS) -L$(LIBFT_DIR) -lft -o $(NAME_BONUS)
+			@printf '\033[A\033[20C'"\033[32;1m  ✅ Project has compiled successfully!          \033[0m"
+			@printf "\n\n    [🏳️ FLAGS: \033[0;35m$(CFLAGS)\033[0m]"
+			@echo "\033[32;1m\n 💾 Executable \e[7m./$(NAME_BONUS)\e[27m has been created in: \n    └─ 📂 \033[4;36m ~ $(PWD)\033[0m"
 
 bonus:			$(NAME_BONUS)
 				
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	$(RM) -r $(OBJ_DIR) $(BONUS_OBJ_DIR)
 
 fclean:
-	@echo "\033[1;33m\n                        [Cleaning directories with \033[0;36mfclean\033[1;33m]\n\033[0m"
+	@echo "\033[1;93m\n                        [Cleaning directories with \033[0;96mfclean\033[1;93m]\n\033[0m"
 	@make clean
 	@make -C ${LIBFT_DIR} fclean
 	$(RM) $(NAME) $(NAME_BONUS)
 
 re:	
 	@make fclean
-	@echo "\033[1;33m\n                            [Calling \033[0;36mmake all\033[1;33m rule]\n\033[0m"
+	@echo "\033[1;93m\n                            [Calling \033[0;96mmake all\033[1;93m rule]\n\033[0m"
 	@make -s all
 
 .PHONY:	all clean fclean re
