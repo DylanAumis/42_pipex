@@ -27,8 +27,8 @@ SRCS_BONUS		= ${BONUS}
 
 LIBFT_DIR		= Libft/
 
-OBJ_DIR			= objs
-BONUS_OBJ_DIR		= bonus_objs
+OBJ_DIR			= .objs
+BONUS_OBJ_DIR		= .bonus_objs
 OBJS			= $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 BONUS_OBJS		= $(patsubst bonus/%.c,$(BONUS_OBJ_DIR)/%.o,$(SRCS_BONUS))
 
